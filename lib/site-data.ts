@@ -8,6 +8,7 @@ export const company = {
   locationLine: "Xinzheng City, Zhengzhou, Henan Province, China",
   address: "300 meters west of the intersection of Zijing Shan South Road and Qinggong Road, heading north, Guodian Town, Xinzheng City, Zhengzhou, Henan Province, China",
   phone: "+86 185 5981 2218",
+  email: "info@lzcglobal.com",
 }
 
 export const mainNav = [

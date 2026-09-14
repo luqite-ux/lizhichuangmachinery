@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { MapPin, ClipboardList, Wrench, LifeBuoy } from "lucide-react"
+import { MapPin, ClipboardList, Wrench, LifeBuoy, Mail } from "lucide-react"
 import { RfqForm } from "@/components/rfq-form"
 import { company } from "@/lib/site-data"
 import { fetchProductsData } from "@/lib/products-db"
@@ -45,6 +45,8 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
               {company.address}
               <br />
               <a className="mt-2 inline-block font-medium text-primary hover:underline" href={`tel:${company.phone.replace(/\s/g, "")}`}>{company.phone}</a>
+              <br />
+              <a className="mt-1 inline-flex items-center gap-1.5 font-medium text-primary hover:underline" href={`mailto:${company.email}`}><Mail className="size-3.5" aria-hidden="true" />{company.email}</a>
             </span>
           </div>
 

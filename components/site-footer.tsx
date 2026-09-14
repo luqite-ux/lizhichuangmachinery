@@ -1,6 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
-import { MapPin, MessageSquare } from "lucide-react"
+import { Mail, MapPin, MessageSquare } from "lucide-react"
 import { mainNav, company, productNav } from "@/lib/site-data"
 
 export function SiteFooter() {
@@ -87,6 +87,10 @@ export function SiteFooter() {
                 <Link href="/contact" className="hover:text-primary">
                   Submit a request for quotation
                 </Link>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <Mail className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
+                <a href={`mailto:${company.email}`} className="hover:text-primary">{company.email}</a>
               </li>
             </ul>
           </div>

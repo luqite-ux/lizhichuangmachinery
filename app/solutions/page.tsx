@@ -10,11 +10,14 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { solutionPillars } from "@/lib/site-data"
+import { absoluteUrl } from "@/lib/site-config"
 
 export const metadata: Metadata = {
   title: "Solutions",
   description:
     "Project planning, workshop layout, and production-supporting information sharing for wet wipes production and packaging equipment projects.",
+  alternates: { canonical: absoluteUrl("/solutions") },
+  openGraph: { title: "Solutions", description: "Project planning, workshop layout, and production-supporting information sharing for wet wipes production and packaging equipment projects.", type: "website", url: absoluteUrl("/solutions"), images: [{ url: absoluteUrl("/images/hero-machine-line.jpg") }] },
 }
 
 const pillarDetails: Record<string, string[]> = {

@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "News",
   description: "Company, equipment, and project updates from Zhengzhou Lizhichuang Machinery Equipment Co., Ltd.",
   alternates: { canonical: absoluteUrl("/news") },
+  openGraph: { title: "News", description: "Company, equipment, and project updates from Zhengzhou Lizhichuang Machinery Equipment Co., Ltd.", type: "website", url: absoluteUrl("/news"), images: [{ url: absoluteUrl("/images/hero-machine-line.jpg") }] },
 }
 
 export default async function NewsPage() {

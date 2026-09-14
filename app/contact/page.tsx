@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   description:
     "Submit a request for quotation to Zhengzhou Lizhichuang Machinery Equipment Co., Ltd. for wet wipes production and packaging equipment.",
   alternates: { canonical: absoluteUrl("/contact") },
+  openGraph: { title: "Contact Zhengzhou Lizhichuang Machinery Equipment Co., Ltd.", description: "Submit a request for quotation to Zhengzhou Lizhichuang Machinery Equipment Co., Ltd. for wet wipes production and packaging equipment.", type: "website", url: absoluteUrl("/contact"), images: [{ url: absoluteUrl("/images/hero-machine-line.jpg") }] },
 }
 
 const contactPoints = [

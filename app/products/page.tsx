@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { ProductFilter } from "@/components/product-filter"
 import { fetchProductsData } from "@/lib/products-db"
+import { absoluteUrl } from "@/lib/site-config"
 
 export const revalidate = 60
 
@@ -8,6 +9,8 @@ export const metadata: Metadata = {
   title: "Wet Wipes Production & Packaging Equipment",
   description:
     "Ten customer-documented wet wipes production, grouped packing, and canister-roll equipment models from Lizhichuang Machinery.",
+  alternates: { canonical: absoluteUrl("/products") },
+  openGraph: { title: "Wet Wipes Production & Packaging Equipment", description: "Ten customer-documented wet wipes production, grouped packing, and canister-roll equipment models from Lizhichuang Machinery.", type: "website", url: absoluteUrl("/products"), images: [{ url: absoluteUrl("/images/hero-machine-line.jpg") }] },
 }
 
 export default async function ProductsPage() {

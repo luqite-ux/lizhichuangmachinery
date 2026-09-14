@@ -4,11 +4,14 @@ import Link from "next/link"
 import { ArrowUpRight, Users, Gauge, ShieldCheck, Lightbulb, Handshake, ClipboardCheck, BadgeCheck, Target } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { company } from "@/lib/site-data"
+import { absoluteUrl } from "@/lib/site-config"
 
 export const metadata: Metadata = {
   title: "About",
   description:
     "Zhengzhou Lizhichuang Machinery Equipment Co., Ltd. designs, develops, produces, commissions, sells, and services wet wipes production and packaging equipment.",
+  alternates: { canonical: absoluteUrl("/about") },
+  openGraph: { title: "About Zhengzhou Lizhichuang Machinery Equipment Co., Ltd.", description: "Zhengzhou Lizhichuang Machinery Equipment Co., Ltd. designs, develops, produces, commissions, sells, and services wet wipes production and packaging equipment.", type: "website", url: absoluteUrl("/about"), images: [{ url: absoluteUrl("/images/about-lobby-1.jpg") }] },
 }
 
 const values = [

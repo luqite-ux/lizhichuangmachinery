@@ -73,22 +73,21 @@ export function MotionController() {
     for (const target of targets) observer.observe(target)
     root.classList.add("motion-ready")
 
-    const initialFallback = window.setTimeout(() => {
+    const revealViewportTargets = () => {
       for (const target of targets) {
-        if (target.getBoundingClientRect().top < window.innerHeight * 1.15) reveal(target)
+        const bounds = target.getBoundingClientRect()
+        if (bounds.bottom > 0 && bounds.top < window.innerHeight * 1.15) reveal(target)
       }
-    }, 1200)
+    }
 
-    const globalFallback = window.setTimeout(() => {
-      for (const target of targets) reveal(target)
-      observer.disconnect()
-    }, 15000)
+    const initialFallback = window.setTimeout(revealViewportTargets, 1200)
+    const viewportFallback = window.setInterval(revealViewportTargets, 2500)
 
     return () => {
       disposed = true
       observer.disconnect()
       window.clearTimeout(initialFallback)
-      window.clearTimeout(globalFallback)
+      window.clearInterval(viewportFallback)
       for (const timer of cleanupTimers) window.clearTimeout(timer)
       for (const target of targets) {
         delete target.dataset.motionState

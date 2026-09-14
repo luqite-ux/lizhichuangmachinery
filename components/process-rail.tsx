@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react"
 import { processRail } from "@/lib/site-data"
 import { cn } from "@/lib/utils"
 
@@ -8,23 +9,29 @@ export function ProcessRail({ className }: { className?: string }) {
         "grid gap-6 md:grid-flow-col md:auto-cols-fr md:gap-3 lg:gap-4",
         className,
       )}
+      data-process-rail
     >
       {processRail.map((step, i) => {
         const Icon = step.icon
         const isLast = i === processRail.length - 1
         return (
-          <li key={step.title} className="reveal-panel relative flex gap-4 md:flex-col md:gap-3">
+          <li
+            key={step.title}
+            className="reveal-panel process-motion-step relative flex gap-4 md:flex-col md:gap-3"
+            data-process-step
+            style={{ "--motion-index": i } as CSSProperties}
+          >
             <div className="flex flex-col items-center md:w-full">
-              <div className="flex size-11 shrink-0 items-center justify-center rounded-sm border border-primary bg-primary/10 text-primary">
+              <div className="process-motion-node flex size-11 shrink-0 items-center justify-center rounded-sm border border-primary bg-primary/10 text-primary">
                 <Icon className="size-5" aria-hidden="true" />
               </div>
-              {!isLast && (
-                <span
-                  className="mt-2 hidden h-px w-full flex-1 bg-border md:block"
-                  aria-hidden="true"
-                />
-              )}
             </div>
+            {!isLast && (
+              <span
+                className="process-motion-line absolute left-[calc(50%+28px)] top-[22px] hidden h-0.5 w-[calc(100%-40px)] overflow-hidden bg-border md:block"
+                aria-hidden="true"
+              />
+            )}
             <div className="pb-2 md:pb-0 md:text-center">
               <span className="font-mono text-[10px] uppercase tracking-wider text-accent">
                 Step {String(i + 1).padStart(2, "0")}

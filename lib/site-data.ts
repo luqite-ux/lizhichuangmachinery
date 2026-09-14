@@ -48,7 +48,7 @@ export const outputSamples = [
 ]
 
 export const heroSlides = [
-  { id: "line", image: "/images/hero-machine-line.jpg", alt: "Wet wipes production line supplied by Lizhichuang Machinery", eyebrow: "Production Line", heading: "One Line, From Web to Wipe", body: "Coordinate material feeding, wetting, folding, cutting, and packing around the confirmed product format.", objectPosition: "38% center" },
-  { id: "stack", image: "/images/hero-wipes-stack.jpg", alt: "Finished wet wipes formats supported by Lizhichuang equipment", eyebrow: "Packing Formats", heading: "Configure Every Pack Around the Market", body: "Plan individual sachets, portable multi-sheet packs, cube packs, grouped packs, and canister rolls.", objectPosition: "36% center" },
-  { id: "clouds", image: "/images/hero-wipes-clouds.jpg", alt: "Wet wipes product presentation", eyebrow: "Project Engineering", heading: "Designed, Built, and Commissioned by One Team", body: "Move from equipment selection and workshop layout to factory testing, installation support, and handover.", objectPosition: "40% center" },
+  { id: "line", image: "/images/hero-machine-line-hd.jpg", alt: "Wet wipes production line supplied by Lizhichuang Machinery", eyebrow: "Production Line", heading: "One Line, From Web to Wipe", body: "Coordinate material feeding, wetting, folding, cutting, and packing around the confirmed product format.", objectPosition: "38% center" },
+  { id: "stack", image: "/images/hero-wipes-stack-hd.jpg", alt: "Finished wet wipes formats supported by Lizhichuang equipment", eyebrow: "Packing Formats", heading: "Configure Every Pack Around the Market", body: "Plan individual sachets, portable multi-sheet packs, cube packs, grouped packs, and canister rolls.", objectPosition: "36% center" },
+  { id: "clouds", image: "/images/hero-wipes-clouds-hd.jpg", alt: "Wet wipes product presentation", eyebrow: "Project Engineering", heading: "Designed, Built, and Commissioned by One Team", body: "Move from equipment selection and workshop layout to factory testing, installation support, and handover.", objectPosition: "40% center" },
 ]

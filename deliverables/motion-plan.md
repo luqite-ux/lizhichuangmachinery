@@ -47,7 +47,7 @@
 - Location: every public content section on Home, Products, product details, Solutions, About, News, article details, Contact/RFQ and the footer, plus every product, solution, capability, application, process, certificate, exhibition, FAQ, contact-point, and news-card collection.
 - Effect: major sections alternate among a 20–24 px bounded rise, short rectangular wipe, and 0.975 soft-scale reveal. Repeated cards use a capped 55 ms stagger. Machine imagery remains `contain` and never becomes the mask itself.
 - Why: a controlled panel rhythm matches industrial controls and preserves dense technical scanning.
-- Implementation: the shared `MotionController` adds hidden initial states only after JavaScript and `IntersectionObserver` are available, observes once, removes transient motion attributes after completion, disconnects on route changes, and has both viewport and global visibility fallbacks.
+- Implementation: the shared `MotionController` adds hidden initial states only after JavaScript and `IntersectionObserver` are available, observes once, removes transient motion attributes after completion, disconnects on route changes, and uses a viewport-only fail-safe that never completes off-screen sections early.
 - Desktop: verify the first and last card in every collection animate once with no layout shift.
 - 390px: reduce travel to 8–12 px and cap stagger at 40–60 ms.
 - Reduced motion: all cards are immediately visible with no stagger.
@@ -72,3 +72,12 @@
 - Reduced-motion design result: PASS — all essential information and controls remain visible and usable without animation.
 - Template review evidence will verify Hero narrative, one process rail, first/last cards, hover/focus/press, and fail-safe visibility.
 - Full-content review will repeat the checks across every route and all ten real products, including newly filtered/paginated content.
+
+## Owner-feedback corrective pass — 2026-09-14
+
+- Stable issue: `VIS-MOTION-PERCEPTIBLE-COVERAGE`.
+- Root cause: the previous 15-second global fail-safe completed every off-screen target before a slower reader reached lower sections.
+- Correction: the fail-safe now reveals only targets currently inside or immediately adjacent to the viewport. Every remaining section stays pending until actual viewport entry.
+- Perceptible home profiles: lifecycle cards use sequential icon pulses and lower-edge scans; equipment cards use a restrained inspection float; project steps use sequential nodes and travelling connectors; output imagery uses a bounded float and highlight scan; solution icons signal in sequence; the closing CTA arrow travels continuously.
+- Site-wide coverage: every ordinary section and every `data-motion-section` surface receives an entry reveal plus a thin industrial accent scan after activation; the Hero retains its own slide-specific scan/copy animation.
+- Verification: after waiting 16 seconds at the top of the page, all off-screen sections remained pending. Desktop returned active named animations for all six home profiles with zero hidden descendants after each entered the viewport. Mobile measured `scrollWidth=390`, `clientWidth=390`, and a 358px vertical process rail.

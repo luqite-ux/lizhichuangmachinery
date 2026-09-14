@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { ArrowRight, ArrowUpRight, Factory, Wrench, Ruler, LifeBuoy, ShoppingCart, PenTool } from "lucide-react"
@@ -25,7 +26,7 @@ export default async function HomePage() {
     <>
       <HeroCarousel />
 
-      <section aria-labelledby="capabilities-heading" className="border-b border-border bg-background py-16 md:py-20">
+      <section data-motion-profile="lifecycle" aria-labelledby="capabilities-heading" className="border-b border-border bg-background py-16 md:py-20">
         <div className="mx-auto max-w-7xl px-4 md:px-6">
           <div className="max-w-2xl">
             <span className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
@@ -41,14 +42,15 @@ export default async function HomePage() {
           </div>
 
           <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-            {capabilities.map((cap) => {
+            {capabilities.map((cap, index) => {
               const Icon = cap.icon
               return (
                 <div
                   key={cap.title}
-                  className="reveal-panel flex flex-col items-center gap-3 rounded-lg border border-border bg-card px-3 py-6 text-center"
+                  className="reveal-panel lifecycle-card flex flex-col items-center gap-3 rounded-lg border border-border bg-card px-3 py-6 text-center"
+                  style={{ "--motion-index": index } as CSSProperties}
                 >
-                  <span className="inline-flex size-11 items-center justify-center rounded-sm bg-primary/10 text-primary">
+                  <span className="lifecycle-icon inline-flex size-11 items-center justify-center rounded-sm bg-primary/10 text-primary">
                     <Icon className="size-5" aria-hidden="true" />
                   </span>
                   <span className="text-sm font-bold text-foreground">{cap.title}</span>
@@ -60,7 +62,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section aria-labelledby="products-heading" className="border-b border-border bg-secondary/30 py-16 md:py-20">
+      <section data-motion-profile="equipment-grid" aria-labelledby="products-heading" className="border-b border-border bg-secondary/30 py-16 md:py-20">
         <div className="mx-auto max-w-7xl px-4 md:px-6">
           <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
             <div className="max-w-xl">
@@ -80,14 +82,16 @@ export default async function HomePage() {
           </div>
 
           <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {products.slice(0, 6).map((product) => (
-              <ProductCard key={product.slug} product={product} />
+            {products.slice(0, 6).map((product, index) => (
+              <div key={product.slug} className="equipment-motion-item" style={{ "--motion-index": index } as CSSProperties}>
+                <ProductCard product={product} />
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section aria-labelledby="process-heading" className="border-b border-border bg-background py-16 md:py-20">
+      <section data-motion-profile="project-flow" aria-labelledby="process-heading" className="border-b border-border bg-background py-16 md:py-20">
         <div className="mx-auto max-w-7xl px-4 md:px-6">
           <div className="max-w-2xl">
             <span className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
@@ -103,7 +107,7 @@ export default async function HomePage() {
           </div>
 
           <div className="mt-10 overflow-x-auto">
-            <ProcessRail className="min-w-[720px] md:min-w-0" />
+            <ProcessRail />
           </div>
 
           <div className="mt-8">
@@ -117,7 +121,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section aria-labelledby="output-heading" className="border-b border-border bg-secondary/30 py-16 md:py-20">
+      <section data-motion-profile="output-gallery" aria-labelledby="output-heading" className="border-b border-border bg-secondary/30 py-16 md:py-20">
         <div className="mx-auto max-w-7xl px-4 md:px-6">
           <div className="max-w-2xl">
             <span className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
@@ -129,17 +133,18 @@ export default async function HomePage() {
           </div>
 
           <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-3">
-            {outputSamples.map((sample) => (
+            {outputSamples.map((sample, index) => (
               <div
                 key={sample.src}
-                className="reveal-panel relative aspect-square overflow-hidden rounded-lg border border-border bg-card"
+                className="reveal-panel output-motion-card relative aspect-square overflow-hidden rounded-lg border border-border bg-card"
+                style={{ "--motion-index": index } as CSSProperties}
               >
                 <Image
                   src={sample.src || "/placeholder.svg"}
                   alt={sample.alt}
                   fill
                   sizes="(min-width: 640px) 33vw, 100vw"
-                  className="object-cover"
+                  className="output-motion-image object-cover"
                 />
               </div>
             ))}
@@ -147,7 +152,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section aria-labelledby="solutions-heading" className="border-b border-border bg-background py-16 md:py-20">
+      <section data-motion-profile="solution-cards" aria-labelledby="solutions-heading" className="border-b border-border bg-background py-16 md:py-20">
         <div className="mx-auto max-w-7xl px-4 md:px-6">
           <div className="max-w-2xl">
             <span className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
@@ -159,14 +164,15 @@ export default async function HomePage() {
           </div>
 
           <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-3">
-            {solutionPillars.map((pillar) => {
+            {solutionPillars.map((pillar, index) => {
               const Icon = pillar.icon
               return (
                 <div
                   key={pillar.title}
-                  className="reveal-panel flex flex-col gap-3 rounded-lg border border-border bg-card p-6"
+                  className="reveal-panel solution-motion-card flex flex-col gap-3 rounded-lg border border-border bg-card p-6"
+                  style={{ "--motion-index": index } as CSSProperties}
                 >
-                  <span className="inline-flex size-11 items-center justify-center rounded-sm bg-accent/15 text-accent">
+                  <span className="solution-motion-icon inline-flex size-11 items-center justify-center rounded-sm bg-accent/15 text-accent">
                     <Icon className="size-5" aria-hidden="true" />
                   </span>
                   <h3 className="text-base font-bold text-foreground">{pillar.title}</h3>
@@ -178,7 +184,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section aria-labelledby="cta-heading" className="bg-primary py-16 text-primary-foreground md:py-20">
+      <section data-motion-profile="project-cta" aria-labelledby="cta-heading" className="bg-primary py-16 text-primary-foreground md:py-20">
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-6 px-4 md:flex-row md:items-center md:px-6">
           <div className="max-w-xl">
             <h2 id="cta-heading" className="text-balance text-2xl font-bold md:text-3xl">
@@ -189,10 +195,12 @@ export default async function HomePage() {
               equipment request.
             </p>
           </div>
-          <Button asChild size="lg" variant="secondary" className="gap-1.5">
+          <Button asChild size="lg" variant="secondary" className="project-cta-button gap-1.5">
             <Link href="/contact">
               Request a Quote
-              <ArrowUpRight className="size-4" aria-hidden="true" />
+              <span className="project-cta-icon inline-flex" aria-hidden="true">
+                <ArrowUpRight className="size-4" />
+              </span>
             </Link>
           </Button>
         </div>

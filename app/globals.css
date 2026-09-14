@@ -198,6 +198,132 @@
       transform 620ms cubic-bezier(.22, 1, .36, 1) var(--motion-delay, 0ms),
       clip-path 680ms cubic-bezier(.22, 1, .36, 1) var(--motion-delay, 0ms);
   }
+
+  .motion-ready section[data-motion-profile][data-motion-state='visible'] > div > :first-child {
+    animation: section-heading-enter 760ms cubic-bezier(.22, 1, .36, 1) both;
+  }
+
+  .motion-ready .lifecycle-card[data-motion-complete='true']::after {
+    animation: lifecycle-card-scan 3.4s ease-in-out calc(var(--motion-index, 0) * 140ms) infinite;
+  }
+
+  .motion-ready .lifecycle-card[data-motion-complete='true'] .lifecycle-icon {
+    animation: lifecycle-icon-pulse 3.4s ease-in-out calc(var(--motion-index, 0) * 140ms) infinite;
+  }
+
+  .motion-ready .process-motion-step[data-motion-complete='true'] .process-motion-node {
+    animation: process-node-pulse 3.8s ease-in-out calc(var(--motion-index, 0) * 180ms) infinite;
+  }
+
+  .motion-ready .process-motion-step[data-motion-complete='true'] .process-motion-line::after {
+    animation: process-line-travel 3.8s ease-in-out calc(var(--motion-index, 0) * 180ms) infinite;
+  }
+
+  .motion-ready .process-motion-step[data-motion-complete='true']::after {
+    animation: process-line-travel-y 3.8s ease-in-out calc(var(--motion-index, 0) * 180ms) infinite;
+  }
+
+  .motion-ready [data-motion-profile='equipment-grid'][data-motion-complete='true'] .equipment-motion-item {
+    animation: equipment-inspection-float 7s ease-in-out calc(var(--motion-index, 0) * -620ms) infinite alternate;
+  }
+
+  .motion-ready .output-motion-card[data-motion-complete='true'] .output-motion-image {
+    animation: output-image-float 6.5s ease-in-out calc(var(--motion-index, 0) * -900ms) infinite alternate;
+  }
+
+  .motion-ready .output-motion-card[data-motion-complete='true']::after {
+    animation: output-card-scan 4.6s ease-in-out calc(var(--motion-index, 0) * 320ms) infinite;
+  }
+
+  .motion-ready .solution-motion-card[data-motion-complete='true'] .solution-motion-icon {
+    animation: solution-icon-signal 4s ease-in-out calc(var(--motion-index, 0) * 260ms) infinite;
+  }
+
+  .motion-ready [data-motion-profile='project-cta'][data-motion-complete='true'] .project-cta-icon {
+    animation: cta-arrow-travel 1.8s ease-in-out infinite;
+  }
+
+  .motion-ready main section:not([data-motion-skip])[data-motion-complete='true']::before {
+    animation: section-accent-travel 5.2s ease-in-out infinite;
+  }
+
+  .motion-ready main [data-motion-section][data-motion-complete='true']::before {
+    animation: section-accent-travel 5.2s ease-in-out infinite;
+  }
+}
+
+main section:not([data-motion-skip]),
+main [data-motion-section] {
+  position: relative;
+  overflow: clip;
+}
+
+main section:not([data-motion-skip])::before,
+main [data-motion-section]::before {
+  content: '';
+  position: absolute;
+  z-index: 4;
+  top: 0;
+  left: 0;
+  width: 18%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--accent), var(--primary), transparent);
+  opacity: 0;
+  transform: translateX(-115%);
+  pointer-events: none;
+}
+
+.lifecycle-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.lifecycle-card::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0;
+  transform: translateX(-105%);
+  pointer-events: none;
+}
+
+.process-motion-line {
+  position: relative;
+}
+
+.process-motion-line::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, var(--accent), var(--primary), transparent);
+  transform: translateX(-105%);
+}
+
+.process-motion-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 21px;
+  top: 52px;
+  bottom: -20px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--accent), color-mix(in oklch, var(--primary) 35%, transparent), transparent);
+  opacity: 0;
+  transform: scaleY(0);
+  transform-origin: top;
+  pointer-events: none;
+}
+
+.output-motion-card::after {
+  content: '';
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 34%, color-mix(in oklch, white 50%, transparent) 48%, transparent 62%);
+  opacity: 0;
+  transform: translateX(-120%);
+  pointer-events: none;
 }
 
 @keyframes steel-reveal {
@@ -232,6 +358,71 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes section-heading-enter {
+  from { opacity: 0; transform: translate3d(-24px, 0, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes lifecycle-card-scan {
+  0%, 28% { opacity: 0; transform: translateX(-105%); }
+  42%, 55% { opacity: 1; }
+  70%, 100% { opacity: 0; transform: translateX(105%); }
+}
+
+@keyframes lifecycle-icon-pulse {
+  0%, 26%, 72%, 100% { transform: translateY(0) scale(1); box-shadow: 0 0 0 0 transparent; }
+  42% { transform: translateY(-4px) scale(1.08); box-shadow: 0 0 0 8px color-mix(in oklch, var(--primary) 10%, transparent); }
+}
+
+@keyframes process-node-pulse {
+  0%, 28%, 72%, 100% { transform: translateY(0); background-color: color-mix(in oklch, var(--primary) 10%, transparent); box-shadow: 0 0 0 0 transparent; }
+  42% { transform: translateY(-5px); background-color: color-mix(in oklch, var(--accent) 20%, white); box-shadow: 0 0 0 7px color-mix(in oklch, var(--accent) 12%, transparent); }
+}
+
+@keyframes process-line-travel {
+  0%, 30% { transform: translateX(-105%); opacity: 0; }
+  45%, 62% { opacity: 1; }
+  78%, 100% { transform: translateX(105%); opacity: 0; }
+}
+
+@keyframes process-line-travel-y {
+  0%, 30% { transform: scaleY(.08); opacity: .18; }
+  48%, 65% { transform: scaleY(1); opacity: 1; }
+  82%, 100% { transform: scaleY(1); opacity: .18; }
+}
+
+@keyframes equipment-inspection-float {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(0, -5px, 0) scale(1.012); }
+}
+
+@keyframes output-image-float {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(0, -7px, 0) scale(1.018); }
+}
+
+@keyframes output-card-scan {
+  0%, 46% { transform: translateX(-120%); opacity: 0; }
+  56%, 68% { opacity: .85; }
+  82%, 100% { transform: translateX(120%); opacity: 0; }
+}
+
+@keyframes section-accent-travel {
+  0%, 38% { transform: translateX(-115%); opacity: 0; }
+  50%, 64% { opacity: .9; }
+  78%, 100% { transform: translateX(650%); opacity: 0; }
+}
+
+@keyframes solution-icon-signal {
+  0%, 30%, 68%, 100% { transform: rotate(0deg) scale(1); box-shadow: 0 0 0 0 transparent; }
+  44% { transform: rotate(-4deg) scale(1.08); box-shadow: 0 0 0 8px color-mix(in oklch, var(--accent) 10%, transparent); }
+}
+
+@keyframes cta-arrow-travel {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  48% { transform: translate3d(4px, -4px, 0); }
+}
+
 .article-prose { color: var(--foreground); font-size: 1rem; line-height: 1.85; }
 .article-prose h2, .article-prose h3 { margin: 2rem 0 .75rem; font-weight: 700; line-height: 1.25; }
 .article-prose h2 { font-size: 1.6rem; }
@@ -256,6 +447,12 @@
 
   .motion-ready [data-motion-state='visible'] {
     transition-duration: 480ms;
+  }
+}
+
+@media (min-width: 768px) {
+  .process-motion-step::after {
+    display: none;
   }
 }
 

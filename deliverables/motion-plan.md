@@ -7,6 +7,7 @@
 - Conversion goal: move a technical buyer from machine family to model detail and a scoped RFQ without hiding specifications behind motion.
 - Recent-combination check: the latest ledger entries use garment-directional reveals, corrugated-paper paths, and laminated-material peels. This plan instead uses an assembly-line commissioning scan and a feed-to-pack process rail, so the complete combination is not repeated.
 - Base visibility: all copy, cards, imagery, specifications, forms, and controls are visible without JavaScript. Motion is progressive enhancement only after a synchronous `data-motion-ready` boundary.
+- Internal case-library check: the authorized industrial-machinery and Chinese `机械设备` searches returned no matching published cases. No unrelated case was forced into the site; the implementation therefore follows the already-scored Motion mechanisms below and the site's own production-line visual language.
 
 ## External candidates scored
 
@@ -40,13 +41,13 @@
 - 390px: vertical rail with one-shot node emphasis; no scrub or horizontal carousel.
 - Reduced motion: full rail and all nodes render in their final state.
 
-### MOT-LZC-03 — Steel-panel product and evidence reveal
+### MOT-LZC-03 — Full-site steel-panel reveal system
 
 - Responsibility: content hierarchy and all repeated-card coverage.
-- Location: every product, solution, capability, application, process, certificate, exhibition, FAQ, and news-card collection, including filtered/paginated cards on first presentation.
-- Effect: cards use a 20–24 px bounded rise or a short rectangular mask reveal, staggered 70–90 ms with a capped total delay. Machine imagery remains `contain` and never becomes the mask itself.
+- Location: every public content section on Home, Products, product details, Solutions, About, News, article details, Contact/RFQ and the footer, plus every product, solution, capability, application, process, certificate, exhibition, FAQ, contact-point, and news-card collection.
+- Effect: major sections alternate among a 20–24 px bounded rise, short rectangular wipe, and 0.975 soft-scale reveal. Repeated cards use a capped 55 ms stagger. Machine imagery remains `contain` and never becomes the mask itself.
 - Why: a controlled panel rhythm matches industrial controls and preserves dense technical scanning.
-- Implementation: a shared fail-safe reveal component whose base state is visible; observe once and disconnect on completion/unmount.
+- Implementation: the shared `MotionController` adds hidden initial states only after JavaScript and `IntersectionObserver` are available, observes once, removes transient motion attributes after completion, disconnects on route changes, and has both viewport and global visibility fallbacks.
 - Desktop: verify the first and last card in every collection animate once with no layout shift.
 - 390px: reduce travel to 8–12 px and cap stagger at 40–60 ms.
 - Reduced motion: all cards are immediately visible with no stagger.

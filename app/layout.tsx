@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next"
 import { Analytics } from "@vercel/analytics/next"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
+import { MotionController } from "@/components/motion-controller"
 import { absoluteUrl, siteConfig } from "@/lib/site-config"
 import "./globals.css"
 
@@ -28,6 +29,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return <html lang="en" className="bg-background"><body className="flex min-h-screen flex-col font-sans antialiased">
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organization).replace(/</g, "\\u003c") }} />
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(website).replace(/</g, "\\u003c") }} />
-    <SiteHeader /><main className="flex-1">{children}</main><SiteFooter />{process.env.VERCEL === "1" && <Analytics />}
+    <SiteHeader /><main className="flex-1">{children}</main><SiteFooter /><MotionController />{process.env.VERCEL === "1" && <Analytics />}
   </body></html>
 }

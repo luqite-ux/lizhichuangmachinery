@@ -26,7 +26,7 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
   return (
     <div className="mx-auto max-w-7xl px-4 py-14 md:px-6 md:py-20">
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_1.3fr]">
-        <div>
+        <div data-motion-section>
           <span className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
             Contact
           </span>
@@ -55,7 +55,7 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
             {contactPoints.map((point) => {
               const Icon = point.icon
               return (
-                <div key={point.title} className="flex items-start gap-3">
+                <div key={point.title} className="reveal-panel flex items-start gap-3">
                   <span className="mt-0.5 inline-flex size-9 shrink-0 items-center justify-center rounded-sm bg-primary/10 text-primary">
                     <Icon className="size-4" aria-hidden="true" />
                   </span>
@@ -69,7 +69,7 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
           </div>
         </div>
 
-        <div className="rounded-lg border border-border bg-card p-6 md:p-8">
+        <div className="rounded-lg border border-border bg-card p-6 md:p-8" data-motion-section>
           <RfqForm products={products.map(({ slug, name, model }) => ({ slug, name, model }))} defaultProductSlug={params.product || ""} />
         </div>
       </div>

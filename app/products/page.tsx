@@ -17,7 +17,7 @@ export default async function ProductsPage() {
   const { products, categories } = await fetchProductsData()
   return (
     <div className="mx-auto max-w-7xl px-4 py-14 md:px-6 md:py-20">
-      <div className="max-w-2xl">
+      <div className="max-w-2xl" data-motion-section>
         <span className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
           Products
         </span>
@@ -30,7 +30,7 @@ export default async function ProductsPage() {
         </p>
       </div>
 
-      <div className="mt-10">
+      <div className="mt-10" data-motion-section>
         <ProductFilter products={products} categories={categories} />
       </div>
     </div>

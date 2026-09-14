@@ -29,9 +29,9 @@ export function HeroCarousel() {
   }
 
   return (
-    <section className="relative isolate overflow-hidden border-b border-border bg-[#071a33]" aria-label="Featured equipment and services">
-      <div className="relative mx-auto max-w-[1440px] px-0 md:px-6 md:py-6">
-        <div className="relative overflow-hidden bg-[#071a33] md:rounded-lg md:border md:border-white/15 md:panel-notch">
+    <section className="relative isolate overflow-hidden border-b border-border bg-[#071a33]" aria-label="Featured equipment and services" data-motion-skip>
+      <div className="relative w-full">
+        <div className="relative overflow-hidden bg-[#071a33]">
           {heroSlides.map((slide, i) => {
             const Heading = i === active ? "h1" : "h2"
             return (
@@ -55,7 +55,7 @@ export function HeroCarousel() {
               <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,20,42,0.98)_0%,rgba(5,20,42,0.88)_42%,rgba(5,20,42,0.18)_72%,rgba(5,20,42,0.58)_100%)] md:bg-[linear-gradient(270deg,rgba(5,20,42,0.98)_0%,rgba(5,20,42,0.92)_38%,rgba(5,20,42,0.45)_62%,rgba(5,20,42,0.04)_100%)]" aria-hidden="true" />
               <div className="blueprint-grid pointer-events-none absolute inset-0 opacity-20 mix-blend-screen" aria-hidden="true" />
 
-              <div className="relative z-10 flex min-h-[720px] max-w-2xl flex-col justify-start gap-5 px-6 pb-24 pt-12 text-white md:ml-auto md:min-h-[590px] md:w-[56%] md:justify-center md:px-12 md:pb-28 md:pt-16 lg:px-16">
+              <div className="hero-copy relative z-10 flex min-h-[720px] max-w-2xl flex-col justify-start gap-5 px-6 pb-24 pt-12 text-white md:ml-auto md:min-h-[590px] md:w-[56%] md:justify-center md:px-12 md:pb-28 md:pt-16 lg:px-16">
                 <span className="inline-flex w-fit items-center rounded-sm border border-white/35 bg-white/10 px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
                   {slide.eyebrow}
                 </span>

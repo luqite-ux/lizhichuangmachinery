@@ -50,7 +50,7 @@ const values = {
   NEXT_PUBLIC_SUPABASE_ANON_KEY: anonKey,
   NEXT_PUBLIC_TENANT_ID: tenant.id,
   NEXT_PUBLIC_ADMIN_URL: 'https://admin.globle-trade.com',
-  NEXT_PUBLIC_SITE_URL: 'https://lizhichuangmachinery.vercel.app',
+  NEXT_PUBLIC_SITE_URL: 'https://lzcglobal.com',
   SUPABASE_SERVICE_ROLE_KEY: serviceRoleKey,
   CAPTCHA_SECRET: captchaSecret,
   CAPTCHA_SITE_SCOPE: captchaSiteScope,

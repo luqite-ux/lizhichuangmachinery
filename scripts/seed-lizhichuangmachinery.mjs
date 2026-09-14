@@ -12,8 +12,8 @@ import { CATEGORIES, PRODUCTS } from './lizhichuang-catalog.mjs'
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const ADMIN_ROOT = resolve(ROOT, '..', 'huanqiu-admin')
 const PROJECT_KEY = 'lizhichuangmachinery'
-const PROVISIONAL_DOMAIN = 'lizhichuangmachinery.vercel.app'
-const ADMIN_EMAIL = '308881443@qq.com'
+const FORMAL_DOMAIN = 'lzcglobal.com'
+const ADMIN_EMAIL = 'info@lzcglobal.com'
 const SOURCE_ROOT = process.env.LZC_SOURCE_ROOT || String.raw`Y:\客户资料1\1485-郑州利之创机械设备\环球出海资料`
 const ASSET_PLAN_PATH = join(ROOT, '.codex-delivery', 'prepared-asset-plan.json')
 
@@ -92,7 +92,7 @@ async function main() {
   if (emailOwner && !existingTenant) throw new Error('Temporary admin email exists without this tenant')
 
   const initialTenant = {
-    domain: existingTenant?.domain || PROVISIONAL_DOMAIN,
+    domain: FORMAL_DOMAIN,
     name: PROJECT_KEY,
     display_name: '郑州利之创机械设备有限公司',
     email: ADMIN_EMAIL,
@@ -101,9 +101,9 @@ async function main() {
     supported_languages: ['en'],
     default_language: 'en',
     brand_color: '#174f91',
-    public_contact_email: null,
-    contact_email: null,
-    inquiry_notification_email: null,
+    public_contact_email: ADMIN_EMAIL,
+    contact_email: ADMIN_EMAIL,
+    inquiry_notification_email: ADMIN_EMAIL,
     contact_phone: '+86 185 5981 2218',
     contact_whatsapp: null,
     contact_address_short: 'Xinzheng, Zhengzhou, Henan, China',
@@ -220,8 +220,8 @@ async function main() {
       site_settings_source: 'customer workbook, brochure, CE certificate and supplied media',
       site_settings_initialized_at: new Date().toISOString(),
       site_settings_manual_fields: Array.isArray(previousExtra.site_settings_manual_fields) ? previousExtra.site_settings_manual_fields : [],
-      formal_domain_pending: true,
-      formal_contact_email_pending: true,
+      formal_domain_pending: false,
+      formal_contact_email_pending: false,
       banner_urls: bannerUrls,
       company_gallery_urls: companyUrls,
       ce_certificate_url: ceUrl,

@@ -38,3 +38,23 @@ test("homepage sections expose distinct perceptible motion profiles", () => {
   assert.match(styles, /@keyframes section-accent-travel/)
   assert.match(styles, /main \[data-motion-section\]\[data-motion-complete='true'\]::before/)
 })
+
+test("hero controls float on the banner without a full-width control strip", () => {
+  const hero = read("components/hero-carousel.tsx")
+
+  assert.match(hero, /data-hero-controls/)
+  assert.match(hero, /data-hero-pagination/)
+  assert.match(hero, /bottom-4/)
+  assert.doesNotMatch(hero, /border-t border-white\/15 bg-\[#071a33\]\/78/)
+})
+
+test("project flow reserves vertical motion space around its animated nodes", () => {
+  const processRail = read("components/process-rail.tsx")
+
+  assert.match(processRail, /data-process-stage/)
+  assert.match(processRail, /overflow-visible/)
+  assert.match(processRail, /pt-4/)
+  assert.match(processRail, /pb-3/)
+  assert.match(processRail, /md:pt-5/)
+  assert.match(processRail, /md:pb-4/)
+})

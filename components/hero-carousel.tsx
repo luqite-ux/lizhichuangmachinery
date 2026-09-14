@@ -81,40 +81,42 @@ export function HeroCarousel() {
             )
           })}
 
-          <div className="absolute inset-x-0 bottom-0 z-20 flex items-center justify-between gap-4 border-t border-white/15 bg-[#071a33]/78 px-6 py-4 text-white backdrop-blur-md md:px-14 lg:px-20">
-            <div className="flex items-center gap-2" role="tablist" aria-label="Hero slides">
-              {heroSlides.map((slide, i) => (
+          <div data-hero-controls className="pointer-events-none absolute inset-x-0 bottom-4 z-20 px-4 text-white md:bottom-5 md:px-6">
+            <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
+              <div data-hero-pagination className="pointer-events-auto flex items-center gap-2 rounded-full border border-white/20 bg-[#071a33]/55 px-3 py-2 shadow-lg backdrop-blur-md" role="tablist" aria-label="Hero slides">
+                {heroSlides.map((slide, i) => (
+                  <button
+                    key={slide.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={i === active}
+                    aria-label={`Show slide: ${slide.heading}`}
+                    onClick={() => goTo(i)}
+                    className={cn(
+                      "h-1.5 rounded-full transition-all duration-200",
+                      i === active ? "w-8 bg-accent" : "w-4 bg-white/45 hover:bg-white/80",
+                    )}
+                  />
+                ))}
+              </div>
+              <div className="pointer-events-auto flex items-center gap-1.5">
                 <button
-                  key={slide.id}
                   type="button"
-                  role="tab"
-                  aria-selected={i === active}
-                  aria-label={`Show slide: ${slide.heading}`}
-                  onClick={() => goTo(i)}
-                  className={cn(
-                    "h-1.5 rounded-full transition-all duration-200",
-                    i === active ? "w-8 bg-accent" : "w-4 bg-white/35 hover:bg-white/70",
-                  )}
-                />
-              ))}
-            </div>
-            <div className="flex items-center gap-1.5">
-              <button
-                type="button"
-                onClick={() => goTo((active - 1 + heroSlides.length) % heroSlides.length)}
-                className="inline-flex size-9 items-center justify-center rounded-sm border border-white/30 text-white transition-colors hover:border-white hover:bg-white hover:text-[#071a33]"
-                aria-label="Previous slide"
-              >
-                <ChevronLeft className="size-4" aria-hidden="true" />
-              </button>
-              <button
-                type="button"
-                onClick={() => goTo((active + 1) % heroSlides.length)}
-                className="inline-flex size-9 items-center justify-center rounded-sm border border-white/30 text-white transition-colors hover:border-white hover:bg-white hover:text-[#071a33]"
-                aria-label="Next slide"
-              >
-                <ChevronRight className="size-4" aria-hidden="true" />
-              </button>
+                  onClick={() => goTo((active - 1 + heroSlides.length) % heroSlides.length)}
+                  className="inline-flex size-9 items-center justify-center rounded-sm border border-white/35 bg-[#071a33]/55 text-white shadow-lg backdrop-blur-md transition-colors hover:border-white hover:bg-white hover:text-[#071a33]"
+                  aria-label="Previous slide"
+                >
+                  <ChevronLeft className="size-4" aria-hidden="true" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => goTo((active + 1) % heroSlides.length)}
+                  className="inline-flex size-9 items-center justify-center rounded-sm border border-white/35 bg-[#071a33]/55 text-white shadow-lg backdrop-blur-md transition-colors hover:border-white hover:bg-white hover:text-[#071a33]"
+                  aria-label="Next slide"
+                >
+                  <ChevronRight className="size-4" aria-hidden="true" />
+                </button>
+              </div>
             </div>
           </div>
         </div>

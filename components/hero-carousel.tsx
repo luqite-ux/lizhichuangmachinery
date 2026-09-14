@@ -32,7 +32,9 @@ export function HeroCarousel() {
     <section className="relative isolate overflow-hidden border-b border-border bg-[#071a33]" aria-label="Featured equipment and services">
       <div className="relative mx-auto max-w-[1440px] px-0 md:px-6 md:py-6">
         <div className="relative overflow-hidden bg-[#071a33] md:rounded-lg md:border md:border-white/15 md:panel-notch">
-          {heroSlides.map((slide, i) => (
+          {heroSlides.map((slide, i) => {
+            const Heading = i === active ? "h1" : "h2"
+            return (
             <div
               key={slide.id}
               data-active={i === active}
@@ -57,9 +59,9 @@ export function HeroCarousel() {
                 <span className="inline-flex w-fit items-center rounded-sm border border-white/35 bg-white/10 px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
                   {slide.eyebrow}
                 </span>
-                <h1 className="max-w-xl text-balance font-sans text-[2rem] font-bold leading-[1.08] tracking-[-0.025em] text-white md:text-[3rem]">
+                <Heading className="max-w-xl text-balance font-sans text-[2rem] font-bold leading-[1.08] tracking-[-0.025em] text-white md:text-[3rem]">
                   {slide.heading}
-                </h1>
+                </Heading>
                 <p className="max-w-lg text-pretty text-base leading-relaxed text-white/82 md:text-lg">
                   {slide.body}
                 </p>
@@ -76,7 +78,8 @@ export function HeroCarousel() {
                 </div>
               </div>
             </div>
-          ))}
+            )
+          })}
 
           <div className="absolute inset-x-0 bottom-0 z-20 flex items-center justify-between gap-4 border-t border-white/15 bg-[#071a33]/78 px-6 py-4 text-white backdrop-blur-md md:px-14 lg:px-20">
             <div className="flex items-center gap-2" role="tablist" aria-label="Hero slides">

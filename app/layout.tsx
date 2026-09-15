@@ -30,5 +30,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organization).replace(/</g, "\\u003c") }} />
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(website).replace(/</g, "\\u003c") }} />
     <SiteHeader /><main className="flex-1">{children}</main><SiteFooter /><MotionController />{process.env.VERCEL === "1" && <Analytics />}
-  </body></html>
+  <script async src="https://admin.globle-trade.com/api/public/analytics.js?tenantId=6c1aa2e0-a38c-47a3-9f83-7ba87a52f203" />
+      </body></html>
 }

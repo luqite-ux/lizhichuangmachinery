@@ -1,3 +1,6 @@
+import { languageAlternates } from "@/lib/localized-metadata"
+import { getRequestLocale } from "@/lib/request-locale"
+import { localizedTree } from "@/lib/localized-tree"
 import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
@@ -7,31 +10,34 @@ import { Button } from "@/components/ui/button"
 import { ProductCard } from "@/components/product-card"
 import { getProductBySlug, getRelatedProducts } from "@/lib/products-db"
 import { absoluteUrl } from "@/lib/site-config"
+import { localizedPath, translateText } from '@/lib/localization'
 
 export const revalidate = 60
 export const dynamicParams = true
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const locale = await getRequestLocale()
   const { slug } = await params
-  const product = await getProductBySlug(slug)
+  const product = await getProductBySlug(slug, locale)
   if (!product) return {}
-  const url = absoluteUrl(`/products/${product.slug}`)
+  const url = absoluteUrl(localizedPath(`/products/${product.slug}`, locale))
   const image = product.images[0]
   return {
     title: product.name,
     description: product.summary,
-    alternates: { canonical: url },
+    alternates: languageAlternates(url, locale),
     openGraph: { title: product.name, description: product.summary, type: "website", url, images: image ? [{ url: image }] : [] },
     twitter: { card: "summary_large_image", title: product.name, description: product.summary, images: image ? [image] : [] },
   }
 }
 
 export default async function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const locale = await getRequestLocale()
   const { slug } = await params
-  const product = await getProductBySlug(slug)
+  const product = await getProductBySlug(slug, locale)
   if (!product) notFound()
-  const related = await getRelatedProducts(product)
-  const url = absoluteUrl(`/products/${product.slug}`)
+  const related = await getRelatedProducts(product, locale)
+  const url = absoluteUrl(localizedPath(`/products/${product.slug}`, locale))
   const jsonLd = {
     "@context": "https://schema.org", "@type": "Product", "@id": `${url}#product`,
     name: product.name, model: product.model, description: product.summary, image: product.images,
@@ -41,13 +47,13 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   const breadcrumb = {
     "@context": "https://schema.org", "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
-      { "@type": "ListItem", position: 2, name: "Products", item: absoluteUrl("/products") },
+      { "@type": "ListItem", position: 1, name: translateText('Home', locale), item: absoluteUrl(localizedPath('/', locale)) },
+      { "@type": "ListItem", position: 2, name: translateText('Products', locale), item: absoluteUrl(localizedPath('/products', locale)) },
       { "@type": "ListItem", position: 3, name: product.name, item: url },
     ],
   }
 
-  return <div>
+  return localizedTree(<div>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb).replace(/</g, "\\u003c") }} />
     <div className="border-b border-border bg-secondary/30"><div className="mx-auto max-w-7xl px-4 py-4 md:px-6"><nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-muted-foreground"><Link href="/" className="hover:text-primary">Home</Link><ChevronRight className="size-3.5" aria-hidden="true" /><Link href="/products" className="hover:text-primary">Products</Link><ChevronRight className="size-3.5" aria-hidden="true" /><span className="line-clamp-1 text-foreground" aria-current="page">{product.model}</span></nav></div></div>
@@ -70,5 +76,5 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
     </div></section>
 
     {related.length ? <section className="py-14 md:py-16"><div className="mx-auto max-w-7xl px-4 md:px-6"><div className="flex items-center justify-between"><h2 className="text-2xl font-bold text-foreground md:text-3xl">Related Equipment</h2><Link href="/products" className="inline-flex items-center gap-1 text-sm font-semibold text-primary">View all <ArrowRight className="size-4" /></Link></div><div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{related.map((item) => <ProductCard key={item.slug} product={item} />)}</div></div></section> : null}
-  </div>
+  </div>, locale)
 }

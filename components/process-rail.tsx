@@ -1,9 +1,13 @@
+"use client"
+import { useSiteLocale } from "@/components/locale-provider"
+import { localizedTree } from "@/lib/localized-tree"
 import type { CSSProperties } from "react"
 import { processRail } from "@/lib/site-data"
 import { cn } from "@/lib/utils"
 
 export function ProcessRail({ className }: { className?: string }) {
-  return (
+  const locale = useSiteLocale()
+  return localizedTree((
     <ol
       className={cn(
         "grid overflow-visible gap-6 pb-3 pt-4 md:min-h-[290px] md:grid-flow-col md:auto-cols-fr md:gap-3 md:pb-4 md:pt-5 lg:gap-4",
@@ -46,5 +50,5 @@ export function ProcessRail({ className }: { className?: string }) {
         )
       })}
     </ol>
-  )
+  ), locale)
 }

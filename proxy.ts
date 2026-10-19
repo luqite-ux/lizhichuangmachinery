@@ -15,9 +15,20 @@ function existingServiceExpiryIntegration(request: NextRequest) {
   return NextResponse.next()
 }
 
-export const config = { matcher: ['/admin/:path*'] }
+export const config = { matcher: ['/((?!api|_next|images|favicon|robots.txt|sitemap.xml|.*\\..*).*)'] }
 
 export async function proxy(request: ServiceGuardRequest) {
   if (!isServiceGuardExcludedPath(request.nextUrl.pathname) && !await isWebsiteServiceAvailable()) return ServiceGuardNextResponse.rewrite(new URL('/service-expired', request.url))
-  return existingServiceExpiryIntegration(request)
+  const pathname = request.nextUrl.pathname
+  if (pathname.startsWith('/admin')) return existingServiceExpiryIntegration(request)
+  const locale = pathname === '/zh' || pathname.startsWith('/zh/') ? 'zh' : 'en'
+  const requestHeaders = new Headers(request.headers)
+  requestHeaders.set('x-site-locale', locale)
+  if (locale === 'zh') {
+    const url = request.nextUrl.clone()
+    url.pathname = pathname.slice(3) || '/'
+    if (!/^\/(?:$|products(?:\/|$)|about$|solutions$|news(?:\/|$)|contact$)/.test(url.pathname)) return NextResponse.next({ request: { headers: requestHeaders } })
+    return NextResponse.rewrite(url, { request: { headers: requestHeaders } })
+  }
+  return NextResponse.next({ request: { headers: requestHeaders } })
 }

@@ -1,3 +1,6 @@
+import { localizeMetadata } from "@/lib/localized-metadata"
+import { getRequestLocale } from "@/lib/request-locale"
+import { localizedTree } from "@/lib/localized-tree"
 import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
@@ -6,7 +9,7 @@ import { Button } from "@/components/ui/button"
 import { company } from "@/lib/site-data"
 import { absoluteUrl } from "@/lib/site-config"
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "About",
   description:
     "Zhengzhou Lizhichuang Machinery Equipment Co., Ltd. designs, develops, produces, commissions, sells, and services wet wipes production and packaging equipment.",
@@ -32,8 +35,9 @@ const gallery = [
   { src: "/images/about-lobby-2.jpg", alt: "Facility corridor with company signage and core value graphics" },
 ]
 
-export default function AboutPage() {
-  return (
+export default async function AboutPage() {
+  const locale = await getRequestLocale()
+  return localizedTree((
     <div>
       <section className="border-b border-border bg-secondary/30">
         <div className="mx-auto max-w-7xl px-4 py-14 md:px-6 md:py-20">
@@ -152,5 +156,7 @@ export default function AboutPage() {
         </div>
       </section>
     </div>
-  )
+  ), locale)
 }
+
+export async function generateMetadata(): Promise<Metadata> { return localizeMetadata(baseMetadata, await getRequestLocale()) }

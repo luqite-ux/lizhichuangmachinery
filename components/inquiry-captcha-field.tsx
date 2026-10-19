@@ -1,4 +1,6 @@
 'use client'
+import { useSiteLocale } from "@/components/locale-provider"
+import { localizedTree } from "@/lib/localized-tree"
 
 import { useCallback, useEffect, useState } from 'react'
 import {
@@ -27,6 +29,7 @@ export function InquiryCaptchaField({
   refreshKey = 0,
   className = '',
 }: InquiryCaptchaFieldProps) {
+  const locale = useSiteLocale()
   const [scope] = useState(() => createInquiryCaptchaScope())
   const [requests] = useState(() => createLatestCaptchaRequestController())
   const [challenge, setChallenge] = useState<CaptchaResponse | null>(null)
@@ -61,7 +64,7 @@ export function InquiryCaptchaField({
     return () => requests.abortCurrent()
   }, [refresh, refreshKey, requests])
 
-  return (
+  return localizedTree((
     <div className={className}>
       <label htmlFor={answerName} className="mb-2 block text-sm font-medium">
         Verification code
@@ -115,5 +118,5 @@ export function InquiryCaptchaField({
         </p>
       ) : null}
     </div>
-  )
+  ), locale)
 }

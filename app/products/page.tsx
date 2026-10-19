@@ -1,3 +1,6 @@
+import { localizeMetadata } from "@/lib/localized-metadata"
+import { getRequestLocale } from "@/lib/request-locale"
+import { localizedTree } from "@/lib/localized-tree"
 import type { Metadata } from "next"
 import { ProductFilter } from "@/components/product-filter"
 import { fetchProductsData } from "@/lib/products-db"
@@ -5,7 +8,7 @@ import { absoluteUrl } from "@/lib/site-config"
 
 export const revalidate = 60
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Wet Wipes Production & Packaging Equipment",
   description:
     "Ten customer-documented wet wipes production, grouped packing, and canister-roll equipment models from Lizhichuang Machinery.",
@@ -14,8 +17,9 @@ export const metadata: Metadata = {
 }
 
 export default async function ProductsPage() {
-  const { products, categories } = await fetchProductsData()
-  return (
+  const locale = await getRequestLocale()
+  const { products, categories } = await fetchProductsData(locale)
+  return localizedTree((
     <div className="mx-auto max-w-7xl px-4 py-14 md:px-6 md:py-20">
       <div className="max-w-2xl" data-motion-section>
         <span className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
@@ -34,5 +38,7 @@ export default async function ProductsPage() {
         <ProductFilter products={products} categories={categories} />
       </div>
     </div>
-  )
+  ), locale)
 }
+
+export async function generateMetadata(): Promise<Metadata> { return localizeMetadata(baseMetadata, await getRequestLocale()) }

@@ -1,4 +1,6 @@
 "use client"
+import { useSiteLocale } from "@/components/locale-provider"
+import { localizedTree } from "@/lib/localized-tree"
 import { FormEvent, useId, useState } from "react"
 import { CheckCircle2, Loader2, Send, TriangleAlert } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -6,11 +8,13 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Field, FieldContent, FieldError, FieldGroup, FieldLabel, FieldSet, FieldLegend } from "@/components/ui/field"
 import { InquiryCaptchaField } from "@/components/inquiry-captcha-field"
+import { translateText } from '@/lib/localization'
 
 type Option = { slug: string; name: string; model: string }
 type Status = "idle" | "loading" | "success" | "error"
 
 export function RfqForm({ products, defaultProductSlug = "" }: { products: Option[]; defaultProductSlug?: string }) {
+  const locale = useSiteLocale()
   const formId = useId().replace(/:/g, "")
   const [status, setStatus] = useState<Status>("idle")
   const [errors, setErrors] = useState<Record<string, string>>({})
@@ -27,9 +31,9 @@ export function RfqForm({ products, defaultProductSlug = "" }: { products: Optio
       form.reset(); setStatus("success")
     } catch { setFormError("We couldn't reach the server. Please check your connection and try again."); setStatus("error"); setCaptchaSeed((value) => value + 1) }
   }
-  if (status === "success") return <div role="status" className="flex flex-col items-center gap-3 rounded-lg border border-primary/30 bg-primary/5 p-10 text-center"><CheckCircle2 className="size-10 text-primary" /><h2 className="text-xl font-bold text-foreground">Inquiry received</h2><p className="max-w-md text-sm leading-relaxed text-muted-foreground">Our team will review the equipment format, output, and workshop information you supplied, then follow up using your contact details.</p><Button variant="outline" onClick={() => { setStatus("idle"); setCaptchaSeed((value) => value + 1) }}>Submit another inquiry</Button></div>
-  const disabled = status === "loading"; const field = (name: string) => errors[name] ? [{ message: errors[name] }] : undefined
-  return <form onSubmit={submit} noValidate aria-busy={disabled}><FieldSet><FieldLegend variant="label" className="sr-only">Request for quotation</FieldLegend><FieldGroup>
+  if (status === "success") return localizedTree(<div role="status" className="flex flex-col items-center gap-3 rounded-lg border border-primary/30 bg-primary/5 p-10 text-center"><CheckCircle2 className="size-10 text-primary" /><h2 className="text-xl font-bold text-foreground">Inquiry received</h2><p className="max-w-md text-sm leading-relaxed text-muted-foreground">Our team will review the equipment format, output, and workshop information you supplied, then follow up using your contact details.</p><Button variant="outline" onClick={() => { setStatus("idle"); setCaptchaSeed((value) => value + 1) }}>Submit another inquiry</Button></div>, locale)
+  const disabled = status === "loading"; const field = (name: string) => errors[name] ? [{ message: translateText(errors[name], locale) }] : undefined
+  return localizedTree(<form onSubmit={submit} noValidate aria-busy={disabled}><FieldSet><FieldLegend variant="label" className="sr-only">Request for quotation</FieldLegend><FieldGroup>
     {formError ? <p role="alert" className="flex gap-2 rounded-md border border-destructive/40 bg-destructive/10 p-4 text-sm text-destructive"><TriangleAlert className="size-4 shrink-0" />{formError}</p> : null}
     <div className="grid gap-6 sm:grid-cols-2">
       <Field data-invalid={Boolean(errors.company)}><FieldLabel htmlFor={`${formId}-company`}>Company name</FieldLabel><FieldContent><Input id={`${formId}-company`} name="company" required disabled={disabled} autoComplete="organization" /><FieldError errors={field("company")} /></FieldContent></Field>
@@ -45,5 +49,5 @@ export function RfqForm({ products, defaultProductSlug = "" }: { products: Optio
     <Field data-invalid={Boolean(errors.message)}><FieldLabel htmlFor={`${formId}-message`}>Project details</FieldLabel><FieldContent><Textarea id={`${formId}-message`} name="message" required minLength={20} rows={5} disabled={disabled} placeholder="Wipe format, sheet count, pack combination, materials, and any required line interfaces." /><FieldError errors={field("message")} /></FieldContent></Field>
     <InquiryCaptchaField refreshKey={captchaSeed} answerName={`${formId}-captcha-answer`} className="rounded-md border border-border bg-secondary/35 p-4" />{errors.captcha ? <p role="alert" className="text-sm text-destructive">{errors.captcha}</p> : null}
     <Button type="submit" size="lg" disabled={disabled} className="gap-2 sm:w-fit">{disabled ? <><Loader2 className="size-4 animate-spin" />Submitting</> : <>Submit Request<Send className="size-4" /></>}</Button>
-  </FieldGroup></FieldSet></form>
+  </FieldGroup></FieldSet></form>, locale)
 }

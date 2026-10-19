@@ -1,14 +1,18 @@
+"use client"
+import { useSiteLocale } from "@/components/locale-provider"
+import { localizedTree } from "@/lib/localized-tree"
 import Link from "next/link"
 import Image from "next/image"
 import { Mail, MapPin, MessageSquare } from "lucide-react"
 import { mainNav, company, productNav } from "@/lib/site-data"
 
 export function SiteFooter() {
+  const locale = useSiteLocale()
   const year = new Date().getFullYear()
   const copyrightOwner = company.legalNameEn.replace(/[.;:!?，。；：！？\s]+$/u, "")
   const copyrightText = `© ${year} ${copyrightOwner}. All rights reserved.`
 
-  return (
+  return localizedTree((
     <footer className="border-t border-border bg-secondary/40">
       <div className="mx-auto max-w-7xl px-4 py-12 md:px-6">
         <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
@@ -102,5 +106,5 @@ export function SiteFooter() {
         </div>
       </div>
     </footer>
-  )
+  ), locale)
 }

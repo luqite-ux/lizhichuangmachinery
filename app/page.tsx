@@ -1,3 +1,5 @@
+import { getRequestLocale } from "@/lib/request-locale"
+import { localizedTree } from "@/lib/localized-tree"
 import type { CSSProperties } from "react"
 import Link from "next/link"
 import Image from "next/image"
@@ -21,8 +23,9 @@ const capabilities = [
 ]
 
 export default async function HomePage() {
-  const { products } = await fetchProductsData()
-  return (
+  const locale = await getRequestLocale()
+  const { products } = await fetchProductsData(locale)
+  return localizedTree((
     <>
       <HeroCarousel />
 
@@ -206,5 +209,5 @@ export default async function HomePage() {
         </div>
       </section>
     </>
-  )
+  ), locale)
 }

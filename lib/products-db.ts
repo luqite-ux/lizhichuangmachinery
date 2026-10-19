@@ -34,7 +34,7 @@ export function mapProduct(row: Row, locale: Locale = DEFAULT_LOCALE): Product {
     features: resolveLocalizedList(row.features_i18n, locale, row.features),
     processSteps: resolveLocalizedList(extra.process_steps_i18n, locale),
     applications: resolveLocalizedList(row.applications_i18n, locale, row.applications),
-    specifications: stringRecord(extra.specifications ?? row.specs),
+    specifications: stringRecord((extra.specifications_i18n as Record<string, unknown> | undefined)?.[locale] ?? extra.specifications ?? row.specs),
     datasheetUrls: strings(extra.datasheet_urls),
     equipmentLayoutUrls: strings(extra.equipment_layout_urls),
     certificate: resolveLocalized(extra.certificate_i18n, locale),
@@ -67,7 +67,7 @@ export async function getProductBySlug(slug: string, locale: Locale = DEFAULT_LO
   return data ? mapProduct(data as Row, locale) : null
 }
 
-export async function getRelatedProducts(product: Product): Promise<Product[]> {
-  const { products } = await fetchProductsData()
+export async function getRelatedProducts(product: Product, locale: Locale = DEFAULT_LOCALE): Promise<Product[]> {
+  const { products } = await fetchProductsData(locale)
   return products.filter((item) => item.slug !== product.slug && item.categorySlug === product.categorySlug).slice(0, 3)
 }

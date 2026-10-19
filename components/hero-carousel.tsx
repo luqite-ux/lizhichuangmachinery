@@ -1,4 +1,6 @@
 "use client"
+import { useSiteLocale } from "@/components/locale-provider"
+import { localizedTree } from "@/lib/localized-tree"
 
 import Image from "next/image"
 import Link from "next/link"
@@ -9,6 +11,7 @@ import { heroSlides } from "@/lib/site-data"
 import { cn } from "@/lib/utils"
 
 export function HeroCarousel() {
+  const locale = useSiteLocale()
   const [active, setActive] = useState(0)
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
@@ -28,7 +31,7 @@ export function HeroCarousel() {
     setActive(index)
   }
 
-  return (
+  return localizedTree((
     <section className="relative isolate overflow-hidden border-b border-border bg-[#071a33]" aria-label="Featured equipment and services" data-motion-skip>
       <div className="relative w-full">
         <div className="relative overflow-hidden bg-[#071a33]">
@@ -122,5 +125,5 @@ export function HeroCarousel() {
         </div>
       </div>
     </section>
-  )
+  ), locale)
 }

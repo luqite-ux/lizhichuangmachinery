@@ -1,3 +1,6 @@
+import { localizeMetadata } from "@/lib/localized-metadata"
+import { getRequestLocale } from "@/lib/request-locale"
+import { localizedTree } from "@/lib/localized-tree"
 import type { Metadata } from "next"
 import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
@@ -12,7 +15,7 @@ import {
 import { solutionPillars } from "@/lib/site-data"
 import { absoluteUrl } from "@/lib/site-config"
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Solutions",
   description:
     "Project planning, workshop layout, and production-supporting information sharing for wet wipes production and packaging equipment projects.",
@@ -31,15 +34,16 @@ const pillarDetails: Record<string, string[]> = {
     "Positioning equipment for a coherent material flow",
     "Planning space for maintenance access and material staging",
   ],
-  "Production-Supporting Information Sharing": [
+  "Production-Supporting Information": [
     "Sharing line sequencing and changeover considerations",
     "Sharing operating notes relevant to your configuration",
     "Coordinating with your team through installation and training",
   ],
 }
 
-export default function SolutionsPage() {
-  return (
+export default async function SolutionsPage() {
+  const locale = await getRequestLocale()
+  return localizedTree((
     <div>
       <section className="border-b border-border bg-secondary/30">
         <div className="mx-auto max-w-7xl px-4 py-14 md:px-6 md:py-20">
@@ -139,5 +143,7 @@ export default function SolutionsPage() {
         </div>
       </section>
     </div>
-  )
+  ), locale)
 }
+
+export async function generateMetadata(): Promise<Metadata> { return localizeMetadata(baseMetadata, await getRequestLocale()) }

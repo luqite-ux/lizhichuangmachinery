@@ -1,3 +1,6 @@
+import { localizeMetadata } from "@/lib/localized-metadata"
+import { getRequestLocale } from "@/lib/request-locale"
+import { localizedTree } from "@/lib/localized-tree"
 import type { Metadata } from "next"
 import { MapPin, ClipboardList, Wrench, LifeBuoy, Mail } from "lucide-react"
 import { RfqForm } from "@/components/rfq-form"
@@ -7,7 +10,7 @@ import { absoluteUrl } from "@/lib/site-config"
 
 export const revalidate = 60
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Contact",
   description:
     "Submit a request for quotation to Zhengzhou Lizhichuang Machinery Equipment Co., Ltd. for wet wipes production and packaging equipment.",
@@ -22,8 +25,9 @@ const contactPoints = [
 ]
 
 export default async function ContactPage({ searchParams }: { searchParams: Promise<{ product?: string }> }) {
-  const [{ products }, params] = await Promise.all([fetchProductsData(), searchParams])
-  return (
+  const locale = await getRequestLocale()
+  const [{ products }, params] = await Promise.all([fetchProductsData(locale), searchParams])
+  return localizedTree((
     <div className="mx-auto max-w-7xl px-4 py-14 md:px-6 md:py-20">
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_1.3fr]">
         <div data-motion-section>
@@ -74,5 +78,7 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
         </div>
       </div>
     </div>
-  )
+  ), locale)
 }
+
+export async function generateMetadata(): Promise<Metadata> { return localizeMetadata(baseMetadata, await getRequestLocale()) }
